@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 
-interface streamData {
+export interface streamData {
   stream: string,
   data: {
     e: string,
