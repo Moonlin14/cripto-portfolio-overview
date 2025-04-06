@@ -12,8 +12,7 @@ export interface streamData {
 }
 
 export default function Home() {
-  // const ws = new WebSocket('wss://stream.binance.com:9443/stream?streams=ethusdt@ticker/btcusdt@ticker');
-
+  const ws = new WebSocket('wss://stream.binance.com:9443/stream?streams=paxusdt@ticker');
 
   return (
     <div className="h-screen p-10.5 flex flex-col">
