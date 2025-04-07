@@ -15,7 +15,7 @@ export interface currencieItem {
 
 export const Modal: FC<modalProps> = ({ active, setActive, currencies }) => {
   const [currencie, setCurrencie] = useState<currencieItem | null>(null);
-  const [filtredCurrencies, setFiltredCurrencies] = useState([...currencies])
+  const [filtredCurrencies, setFiltredCurrencies] = useState<requestData[] | null>(null)
   const searchRef = useRef<HTMLInputElement>(null);
   const amountRef = useRef(null);
 
@@ -23,14 +23,18 @@ export const Modal: FC<modalProps> = ({ active, setActive, currencies }) => {
     return null;
   }  
 
-  const handleSubmit = (formData: FormData) => {
-    const amount = formData.get('amount') as string;
-  };
+  // const handleSubmit = () => {
+  //   let value = '';
+  //   if (amountRef.current !== null) {
+  //     value = amountRef.current.value;
+  //   }
+
+  // };
 
   const handleSearch = () => {
     let value = '';
     if(searchRef.current !== null) {
-      value = searchRef.current.value
+      value = searchRef.current.value;
     }
     setFiltredCurrencies(currencies.filter((item) => item.symbol.toLowerCase().includes(value.toLowerCase())));    
   }
@@ -43,7 +47,8 @@ export const Modal: FC<modalProps> = ({ active, setActive, currencies }) => {
             />
           <div className="overflow-y-scroll p-4 mb-5 max-h-48">
             <ul>
-              {filtredCurrencies.map((item) => <CurrencieItem symbol={item.symbol} bidPrice={item.bidPrice} priceChangePercent={item.priceChangePercent} set={setCurrencie} key={item.symbol}/>)}
+              {!filtredCurrencies && currencies.map((item) => <CurrencieItem symbol={item.symbol} bidPrice={item.bidPrice} priceChangePercent={item.priceChangePercent} set={setCurrencie} key={item.symbol}/>)}
+              {filtredCurrencies && filtredCurrencies.map((item) => <CurrencieItem symbol={item.symbol} bidPrice={item.bidPrice} priceChangePercent={item.priceChangePercent} set={setCurrencie} key={item.symbol}/>)}
             </ul>
           </div>
           { currencie && (
@@ -52,14 +57,12 @@ export const Modal: FC<modalProps> = ({ active, setActive, currencies }) => {
                 <div>{currencie.currencie}</div>
                 <div>{currencie.fixedPrice}</div>
               </div>
-              <form action={handleSubmit}>
                 <input name="amount" type="number" placeholder="Количество" ref={amountRef}
                 className="border-b-1 border-solid focus:outline-none mb-3 pb-1.5 w-full" />
                 <div className="flex justify-center gap-3">
-                  <button className="bg-[#FF5555] text-white rounded-4xl px-6 py-3 ease-in duration-150 text-lg hover:bg-[#D75555]">добавить</button>
+                  <button className="bg-[#FF5555] text-white rounded-4xl px-6 py-3 ease-in duration-150 text-lg hover:bg-[#D75555]" type="submit">добавить</button>
                   <button className="bg-[#FF5555] text-white rounded-4xl px-6 py-3 ease-in duration-150 text-lg hover:bg-[#D75555]" onClick={() => setCurrencie(null)}>отмена</button>
                 </div>
-              </form>
             </>
           )}
         </div>

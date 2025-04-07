@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { StoreProvider } from "@/slices/StoreProvider";
 
 const myFont = localFont({ src: '../fonts/PPNeueMachina-Regular.otf'})
 
@@ -15,12 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={myFont.className}
-      >
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+        <StoreProvider>
+          <body
+              className={myFont.className}
+          >
+                {children}
+          </body>
+        </StoreProvider>
+      </html>
   );
 }

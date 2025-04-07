@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import walletSlice from './walletSlice';
+import currenciesSlice from './currenciesSlice';
 
-export default configureStore({
+export const store =  configureStore({
   reducer: {
-    wallet: walletSlice,
+    currencies: currenciesSlice,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
